@@ -10,6 +10,7 @@ from __future__ import print_function
 from myo.utils import TimeInterval
 import myo
 import sys
+import json
 
 class Listener(myo.DeviceListener):
 
@@ -31,13 +32,27 @@ class Listener(myo.DeviceListener):
       for comp in self.orientation:
         parts.append('{}{:.3f}'.format(' ' if comp >= 0 else '', comp))
     parts.append(str(self.pose).ljust(10))
-    parts.append('E' if self.emg_enabled else ' ')
-    parts.append('L' if self.locked else ' ')
-    parts.append(self.rssi or 'NORSSI')
-    if self.emg:
-      for comp in self.emg:
-        parts.append(str(comp).ljust(5))
-    print('\r' + ''.join('[{}]'.format(p) for p in parts), end='')
+    # parts.append('E' if self.emg_enabled else ' ')
+    # parts.append('L' if self.locked else ' ')
+    # parts.append(self.rssi or 'NORSSI')
+    # if self.emg:
+    #   for comp in self.emg:
+    #     parts.append(str(comp).ljust(5))
+    # print('\r' + ''.join('[{}]'.format(p) for p in parts), end='')
+    # print('POSE: ' + parts[0])
+    # print(parts)
+    if len(parts) > 4:
+      print(json.dumps({
+        'x': parts[0],
+        'y': parts[1],
+        'z': parts[2],
+        'w': parts[3],
+        'pose': parts[4]
+      }))
+    # print('X: ' + parts[1])
+    # print('Y: ' + parts[2])
+    # print('Z: ' + parts[3])
+    # print('W: ' + parts[4])
     sys.stdout.flush()
 
   def on_connected(self, event):
