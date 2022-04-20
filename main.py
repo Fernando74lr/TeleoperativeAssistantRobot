@@ -62,17 +62,32 @@ class Listener(myo.DeviceListener):
   def on_orientation(self, event):
     self.orientation = event.orientation
     
-    #Up and down
-    if self.orientation.x > 0.2 and self.orientation.x < 0.6:
-        print("down")
-    elif self.orientation.x < -0.1 and self.orientation.x > -0.6:
-      print("up")
 
-    #Left and right
+    # #Up+ and down-
+    # if self.orientation.x > 0.4 and self.orientation.x < 0.6:
+    #     print("Up")
+    # elif self.orientation.x < -0.4 and self.orientation.x > -0.4:
+    #   print("Down")
+
+    # #Left- and right+
+    # if self.orientation.y > 0.2 and self.orientation.y < 0.7:
+    #     print("Right")
+    # elif self.orientation.y < -0.3 and self.orientation.y > -0.5:
+    #     print("Left")
+
+    ##########Invertido###########    
+
+    #Up- and down+
+    if self.orientation.x > 0.2 and self.orientation.x < 0.6:
+        print("Down")
+    elif self.orientation.x < -0.1 and self.orientation.x > -0.6:
+      print("Up")
+
+    #Left+ and right-
     if self.orientation.y > 0.3 and self.orientation.y < 0.7:
-        print("left")
+        print("Left")
     elif self.orientation.y < -0.3 and self.orientation.y > -0.5:
-        print("right")
+        print("Right")
 
     self.output()
 
