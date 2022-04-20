@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-# import json
+import json
 
 hostName = "localhost"
 serverPort = 8081
@@ -11,7 +11,7 @@ class LocobotServer(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "application/json")
         self.end_headers()
-        self.wfile.write({"test": "ok"})
+        self.wfile.write(json.dumps({"test": "ok"}).encode('utf-8'))
 
 
 if __name__ == "__main__":
