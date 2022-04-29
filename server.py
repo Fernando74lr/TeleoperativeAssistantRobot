@@ -1,27 +1,19 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import json
+import socket
 
-hostName = "localhost"
-serverPort = 8081
+PORT = 5050  # socket.gethostbyname(socket.gethostname())
+NUM_REQUESTS = 5
+BUFFER = 1024
 
+my_socket = socket.socket()
+my_socket.bind(('10.50.115.95', PORT))
+my_socket.listen(NUM_REQUESTS)
 
-class LocobotServer(BaseHTTPRequestHandler):
-    def do_GET(self):
-        # file = self.path.replace('/', '')
-        self.send_response(200)
-        self.send_header("Content-type", "application/json")
-        self.end_headers()
-        self.wfile.write(json.dumps({"test": "ok"}).encode('utf-8'))
+while(True):
+    conn, addr = my_socket.accept()
+    print('New connection established!')
+    print(addr)
 
-
-if __name__ == "__main__":
-    webServer = HTTPServer((hostName, serverPort), LocobotServer)
-    print("Server started at http://%s:%s" % (hostName, serverPort))
-
-    try:
-        webServer.serve_forever()
-    except KeyboardInterrupt:
-        pass
-
-    webServer.server_close()
-    print("Server stopped.")
+    req = conn.recv(BUFFER)
+    print(req)
+    conn.send(bytes('Hello world!', encoding="utf8"))
+    conn.close()
