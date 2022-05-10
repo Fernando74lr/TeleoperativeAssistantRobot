@@ -18,7 +18,7 @@ import socket
 HEADERSIZE = 10
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((socket.gethostname(), 1243))
+s.connect(('172.19.16.1', 1243))
 
 while True:
     full_msg = ''

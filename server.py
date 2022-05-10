@@ -25,12 +25,14 @@ while(True):
 '''
 import socket
 import time
-
+# 172.19.16.1
 
 HEADERSIZE = 10
+ADDRESS = socket.gethostbyname(socket.gethostname())
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((socket.gethostname(), 1243))
+s.bind((ADDRESS, 1243))
+print(ADDRESS)
 s.listen(5)
 
 while True:
