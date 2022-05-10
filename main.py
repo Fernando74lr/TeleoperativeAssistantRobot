@@ -11,7 +11,7 @@ from myo.utils import TimeInterval
 import myo
 import sys
 import json
-from socket.server import server
+from socketScripts.server import server
 
 current_data = ''
 
