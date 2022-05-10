@@ -18,7 +18,7 @@ import socket
 HEADERSIZE = 10
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('172.19.16.1', 1243))
+s.connect(('10.50.115.95', 1243))
 
 while True:
     full_msg = ''
@@ -30,14 +30,14 @@ while True:
             msglen = int(msg[:HEADERSIZE])
             new_msg = False
 
-        print(f"full message length: {msglen}")
+        # print(f"full message length: {msglen}")
 
         full_msg += msg.decode("utf-8")
 
-        print(len(full_msg))
+        # print(len(full_msg))
 
         if len(full_msg)-HEADERSIZE == msglen:
             print("full msg recvd")
-            print(full_msg[HEADERSIZE:])
+            # print(full_msg[HEADERSIZE:])
             new_msg = True
             full_msg = ""

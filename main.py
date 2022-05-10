@@ -11,6 +11,9 @@ from myo.utils import TimeInterval
 import myo
 import sys
 import json
+from socket.server import server
+
+current_data = ''
 
 class Listener(myo.DeviceListener):
 
@@ -43,6 +46,13 @@ class Listener(myo.DeviceListener):
     # print(parts)
     if len(parts) > 4:
       print(json.dumps({
+        'x': parts[0],
+        'y': parts[1],
+        'z': parts[2],
+        'w': parts[3],
+        'pose': parts[4]
+      }))
+      current_data = str(json.dumps({
         'x': parts[0],
         'y': parts[1],
         'z': parts[2],
@@ -124,4 +134,4 @@ if __name__ == '__main__':
   hub = myo.Hub()
   listener = Listener()
   while hub.run(listener.on_event, 500):
-    pass
+    server(current_data)
