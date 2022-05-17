@@ -122,6 +122,9 @@ import myo
 import sys
 import json
 
+from socketScripts.server import server
+current_data = ''
+
 
 class Listener(myo.DeviceListener):
 
@@ -135,6 +138,7 @@ class Listener(myo.DeviceListener):
         self.emg = None
 
     def output(self):
+        global current_data
         if not self.interval.check_and_reset():
             return
 
@@ -160,6 +164,7 @@ class Listener(myo.DeviceListener):
                 'w': parts[3],
                 'pose': parts[4]
             }))
+            current_data = parts[4]
         # print('X: ' + parts[1])
         # print('Y: ' + parts[2])
         # print('Z: ' + parts[3])
@@ -232,4 +237,5 @@ if __name__ == '__main__':
     hub = myo.Hub()
     listener = Listener()
     while hub.run(listener.on_event, 500):
-        pass
+        # pass
+        server(current_data)
