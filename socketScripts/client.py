@@ -16,17 +16,18 @@ my_socket.close()
 import socket
 
 HEADERSIZE = 10
-
+ADDRESS = socket.gethostbyname(socket.gethostname())
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('10.50.115.95', 1243))
+s.connect((ADDRESS, 1243))
 
 while True:
     full_msg = ''
     new_msg = True
     while True:
         msg = s.recv(16)
+        print(msg)
         if new_msg:
-            print("new msg len:", msg[:HEADERSIZE])
+            # print("new msg len:", msg[:HEADERSIZE])
             msglen = int(msg[:HEADERSIZE])
             new_msg = False
 
@@ -37,7 +38,7 @@ while True:
         # print(len(full_msg))
 
         if len(full_msg)-HEADERSIZE == msglen:
-            print("full msg recvd")
+            # print("full msg recvd")
             # print(full_msg[HEADERSIZE:])
             new_msg = True
             full_msg = ""

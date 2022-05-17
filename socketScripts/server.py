@@ -25,6 +25,7 @@ while(True):
 '''
 import socket
 import time
+import json
 # 172.19.16.1
 
 HEADERSIZE = 10
@@ -35,22 +36,21 @@ s.bind((ADDRESS, 1243))
 print(ADDRESS)
 s.listen(5)
 
-def server(current_data):
-    while True: 
-        # now our endpoint knows about the OTHER endpoint.
-        clientsocket, address = s.accept()
-        print(f"Connection from {address} has been established.")
 
-        msg = "Welcome to the server!"
+# def server(current_data):
+while True:
+    # now our endpoint knows about the OTHER endpoint.
+    clientsocket, address = s.accept()
+    print(f"Connection from {address} has been established.")
+
+    msg = "Welcome to the server!"
+    msg = f"{len(msg):<{HEADERSIZE}}"+msg
+
+    clientsocket.send(bytes(msg, "utf-8"))
+
+    while True:
+        time.sleep(1)
+        msg = json.dumps({msg: 'probando ando'})
         msg = f"{len(msg):<{HEADERSIZE}}"+msg
 
         clientsocket.send(bytes(msg, "utf-8"))
-
-        while True:
-            time.sleep(1)
-            msg = f"The time is {time.time()}"
-            msg = f"{len(msg):<{HEADERSIZE}}"+msg
-
-            print(current_data)
-
-            clientsocket.send(bytes(current_data, "utf-8"))
