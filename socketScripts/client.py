@@ -2,7 +2,7 @@ import socket
 import pickle
 
 HEADERSIZE = 10
-ADDRESS = socket.gethostbyname(socket.gethostname())
+ADDRESS = '10.50.115.95'#socket.gethostbyname(socket.gethostname())
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((ADDRESS, 1243))
 

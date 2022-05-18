@@ -10,7 +10,7 @@ import time
 
 msg = ''
 HEADERSIZE = 10
-ADDRESS = socket.gethostbyname(socket.gethostname())
+ADDRESS = '10.50.115.95'  # socket.gethostbyname(socket.gethostname())
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((ADDRESS, 1243))
