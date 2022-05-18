@@ -16,6 +16,7 @@ s.connect((ADDRESS, 1243))
 locobot = InterbotixLocobotXS(
     robot_model="locobot_wx250s", arm_model="mobile_wx250s")
 
+
 def gripperClose():
     locobot.gripper.close(2.0)
 
@@ -62,8 +63,31 @@ def sleep():
     locobot.arm.go_to_sleep_pose()
 
 
-# def main():
-#     home()
+def moveRobot(pose):
+    try:
+        # while (pose != 'double_tap'):
+        if (pose == 'fist'):
+            gripperClose()
+        if (pose == 'spread_fingers'):
+            gripperOpen()
+        # if (pose == 1):
+        #     gripperOpen()
+        # if (pose == 2):
+        #     poseLeft()
+        # if (pose == 3):
+        #     poseRight()
+        # if (pose == 4):
+        #     poseUp()
+        # if (pose == 5):
+        #     poseDown()
+        # if (pose == 6):
+        #     sleep()
+        # if (pose == 7):
+        #     home()
+    except Exception as e:
+        print(e)
+
+
 while True:
     full_msg = b''
     new_msg = True
@@ -79,25 +103,9 @@ while True:
         if len(full_msg)-HEADERSIZE == msglen:
             d = pickle.loads(full_msg[HEADERSIZE:])
             print(d)
+            moveRobot(d['pose'])
             new_msg = True
             full_msg = b''
-    # try:
-    #     move = int(input('Move: '))
-    #     while (move != -1):
-    #         if (move == 0): gripperClose()
-    #         if (move == 1): gripperOpen()
-    #         if (move == 2): moveLeft()
-    #         if (move == 3): moveRight()
-    #         if (move == 4): moveUp()
-    #         if (move == 5): moveDown()
-    #         if (move == 6): sleep()
-    #         if (move == 7): home()
-    #         move = int(input('Move: '))
-    #     sleep()
-
-    # except Exception as e:
-    #     print(e)
-    #     sleep()
 
 
 # if __name__ == '__main__':

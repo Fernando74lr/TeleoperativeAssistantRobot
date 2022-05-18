@@ -42,11 +42,11 @@ class Listener(myo.DeviceListener):
 
         if len(parts) > 4:
             data = {
-                'x': parts[0],
-                'y': parts[1],
-                'z': parts[2],
-                'w': parts[3],
-                'pose': parts[4]
+                # 'x': parts[0],
+                # 'y': parts[1],
+                # 'z': parts[2],
+                # 'w': parts[3],
+                'pose': parts[4].split('.')[1].strip()
             }
             msg = pickle.dumps(data)
             print(json.dumps(data))
