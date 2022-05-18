@@ -16,7 +16,6 @@ s.connect((ADDRESS, 1243))
 locobot = InterbotixLocobotXS(
     robot_model="locobot_wx250s", arm_model="mobile_wx250s")
 
-
 def gripperClose():
     locobot.gripper.close(2.0)
 
@@ -63,25 +62,25 @@ def sleep():
     locobot.arm.go_to_sleep_pose()
 
 
-def main():
-    home()
+# def main():
+#     home()
+while True:
+    full_msg = b''
+    new_msg = True
     while True:
-        full_msg = b''
-        new_msg = True
-        while True:
-            msg = s.recv(16)
-            if new_msg:
-                # print("new msg len:", msg[:HEADERSIZE])
-                msglen = int(msg[:HEADERSIZE])
-                new_msg = False
+        msg = s.recv(16)
+        if new_msg:
+            # print("new msg len:", msg[:HEADERSIZE])
+            msglen = int(msg[:HEADERSIZE])
+            new_msg = False
 
-            full_msg += msg
+        full_msg += msg
 
-            if len(full_msg)-HEADERSIZE == msglen:
-                d = pickle.loads(full_msg[HEADERSIZE:])
-                print(d)
-                new_msg = True
-                full_msg = b''
+        if len(full_msg)-HEADERSIZE == msglen:
+            d = pickle.loads(full_msg[HEADERSIZE:])
+            print(d)
+            new_msg = True
+            full_msg = b''
     # try:
     #     move = int(input('Move: '))
     #     while (move != -1):
@@ -101,5 +100,5 @@ def main():
     #     sleep()
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
