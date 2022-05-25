@@ -4,9 +4,9 @@ from interbotix_xs_modules.locobot import InterbotixLocobotXS
 
 
 flagPosition = False
-xaxis = 0
+xaxis = 0.46
 yaxis = 0
-zaxis = 0
+zaxis = 0.35
 
 ADDRESS = '10.50.115.95'  # socket.gethostbyname(socket.gethostname())
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -32,17 +32,20 @@ def gripperOpen():
 
 def moveLeft():
     global yaxis
-    if yaxis<0.15:
-        yaxis = round(yaxis+0.05,2)
-        locobot.arm.set_ee_cartesian_trajectory(y=yaxis)
+    global zaxis
+    
+    if yaxis<0.2:
+        yaxis = yaxis+0.05
+        locobot.arm.set_ee_pose_components(x=0.46, y=yaxis ,z=zaxis)
 
 
 def moveRight():
     global yaxis
+    global zaxis
     
-    if yaxis>-0.15:
-        yaxis = round(yaxis-0.05,2)
-        locobot.arm.set_ee_cartesian_trajectory(y=yaxis)
+    if yaxis>-0.2:
+        yaxis = yaxis-0.05
+        locobot.arm.set_ee_pose_components(x=0.46, y=yaxis ,z=zaxis)
 
 
 
@@ -57,19 +60,21 @@ def moveRight():
 
 
 def moveUp():
+    global yaxis
     global zaxis
     
-    if zaxis<0.025:
-        zaxis = round(zaxis+0.0025,2)
-        locobot.arm.set_ee_cartesian_trajectory(z=zaxis)
+    if zaxis<0.46:
+        zaxis = zaxis+0.02
+        locobot.arm.set_ee_pose_components(x=0.46, y=yaxis ,z=zaxis)
 
 
 def moveDown():
+    global yaxis
     global zaxis
-   
-    if zaxis>0.025:
-        zaxis = round(zaxis-0.0025,2)
-        locobot.arm.set_ee_cartesian_trajectory(z=zaxis)
+    
+    if zaxis>0.1:
+        zaxis = zaxis-0.02
+        locobot.arm.set_ee_pose_components(x=0.46, y=yaxis ,z=zaxis)
 
 
 def home():
