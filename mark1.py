@@ -1,7 +1,13 @@
 import socket
 from interbotix_xs_modules.locobot import InterbotixLocobotXS
 
-HEADERSIZE = 10
+
+
+flagPosition = False
+xaxis = 0
+yaxis = 0
+zaxis = 0
+
 ADDRESS = '10.50.115.95'  # socket.gethostbyname(socket.gethostname())
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((ADDRESS, 1243))
@@ -25,33 +31,45 @@ def gripperOpen():
 
 
 def moveLeft():
-    val = float(input('Y: '))
-    locobot.arm.set_ee_cartesian_trajectory(y=val)
+    global yaxis
+    if yaxis<0.15:
+        yaxis = round(yaxis+0.05,2)
+        locobot.arm.set_ee_cartesian_trajectory(y=yaxis)
 
 
 def moveRight():
-    val = float(input('Y: ')) * -1
-    locobot.arm.set_ee_cartesian_trajectory(y=val)
+    global yaxis
+    
+    if yaxis>-0.15:
+        yaxis = round(yaxis-0.05,2)
+        locobot.arm.set_ee_cartesian_trajectory(y=yaxis)
 
 
-def moveFront():
-    val = float(input('X: '))
-    locobot.arm.set_ee_cartesian_trajectory(x=val)
+
+# def moveFront():
+#     val = float(input('X: '))
+#     locobot.arm.set_ee_cartesian_trajectory(x=val)
 
 
-def moveBack():
-    val = float(input('X: ')) * -1
-    locobot.arm.set_ee_cartesian_trajectory(x=val)
+# def moveBack():
+#     val = float(input('X: ')) * -1
+#     locobot.arm.set_ee_cartesian_trajectory(x=val)
 
 
 def moveUp():
-    val = float(input('Z: '))
-    locobot.arm.set_ee_cartesian_trajectory(z=val)
+    global zaxis
+    
+    if zaxis<0.025:
+        zaxis = round(zaxis+0.0025,2)
+        locobot.arm.set_ee_cartesian_trajectory(z=zaxis)
 
 
 def moveDown():
-    val = float(input('Z: ')) * -1
-    locobot.arm.set_ee_cartesian_trajectory(z=val)
+    global zaxis
+   
+    if zaxis>0.025:
+        zaxis = round(zaxis-0.0025,2)
+        locobot.arm.set_ee_cartesian_trajectory(z=zaxis)
 
 
 def home():
@@ -63,18 +81,27 @@ def sleep():
 
 
 def moveRobot(pose):
+    global flagPosition
     try:
         # while (pose != 'double_tap'):
         if (pose == 'fist'):
             gripperClose()
         if (pose == 'fingers_spread'):
             gripperOpen()
-        # if (pose == 1):
-        #     gripperOpen()
-        # if (pose == 2):
-        #     poseLeft()
-        # if (pose == 3):
-        #     poseRight()
+        if (pose == 'wave_in'):
+            if flagPosition:
+                moveLeft()
+            else:
+                moveDown()    
+        if (pose == 'wave_out'):
+            if flagPosition:
+                moveRight()
+            else:
+                moveUp()    
+        if (pose == 'double_tap'):
+            flagPosition = not flagPosition     
+            # sleep()
+        
         # if (pose == 4):
         #     poseUp()
         # if (pose == 5):
@@ -86,29 +113,10 @@ def moveRobot(pose):
     except Exception as e:
         print(e)
 
+home()
 
 while True:
-    # full_msg = b''
-    # new_msg = True
     while True:
-        # msg = s.recv(1024).decode('utf-8')
         msg = s.recv(1024).decode('utf-8')
-        print(msg)
-        # if new_msg:
-        #     print("new msg len:", msg[:HEADERSIZE])
-        #     msglen = int(msg[:HEADERSIZE])
-        #     new_msg = False
-
-        # full_msg += msg
-
-        # if len(full_msg)-HEADERSIZE == msglen:
-        # print(f'full_msg[HEADERSIZE:] --> {full_msg[HEADERSIZE:]}')
-        # d = pickle.loads(full_msg[HEADERSIZE:])
-        # print(d)
+        print(msg, yaxis,zaxis)
         moveRobot(msg)
-        # new_msg = True
-        # full_msg = b''
-
-
-# if __name__ == '__main__':
-#     main()

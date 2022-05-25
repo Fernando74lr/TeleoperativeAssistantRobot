@@ -4,6 +4,7 @@ import time
 
 HEADERSIZE = 20
 ADDRESS = socket.gethostbyname(socket.gethostname())
+'    fist'
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((ADDRESS, 1243))
