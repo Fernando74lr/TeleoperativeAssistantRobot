@@ -15,7 +15,7 @@ ADDRESS = '10.50.115.95'  # socket.gethostbyname(socket.gethostname())
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((ADDRESS, 1243))
 print(ADDRESS)
-s.listen(5)
+s.listen()
 
 
 class Listener(myo.DeviceListener):
@@ -41,16 +41,19 @@ class Listener(myo.DeviceListener):
         parts.append(str(self.pose).ljust(10))
 
         if len(parts) > 4:
-            data = {
-                # 'x': parts[0],
-                # 'y': parts[1],
-                # 'z': parts[2],
-                # 'w': parts[3],
-                'pose': parts[4].split('.')[1].strip()
-            }
-            msg = pickle.dumps(data)
-            print(json.dumps(data))
-            msg = bytes(f'{len(msg):<{HEADERSIZE}}', 'utf-8') + msg
+            # data = {
+            #     # 'x': parts[0],
+            #     # 'y': parts[1],
+            #     # 'z': parts[2],
+            #     # 'w': parts[3],
+            #     'pose':  parts[4].split('.')[1].strip()
+            #     # 'pose': 'fist'
+            # }
+            # msg = pickle.dumps(data)
+            data = parts[4].split('.')[1].strip()
+            print(data)
+            # print(json.dumps(data))
+            # msg = bytes(f'{len(msg):<{HEADERSIZE}}', 'utf-8') + msg
 
         sys.stdout.flush()
 
@@ -99,4 +102,4 @@ if __name__ == '__main__':
     while hub.run(listener.on_event, 500):
         # pass
         time.sleep(.2)
-        clientsocket.send(msg)
+        clientsocket.sendall(bytes(msg, 'utf-8'))

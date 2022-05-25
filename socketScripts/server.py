@@ -11,15 +11,22 @@ print(ADDRESS)
 s.listen(5)
 
 
-def server(msg):
-    # while True:
+# def server(msg):
+#     # while True:
+#     clientsocket, address = s.accept()
+#     print(f"Connection from {address} has been established.")
+
+#     while True:
+#         time.sleep(2)
+#         clientsocket.send(msg)
+
+while True:
     clientsocket, address = s.accept()
     print(f"Connection from {address} has been established.")
 
     while True:
-        time.sleep(2)
-        clientsocket.send(msg)
-
+        time.sleep(1)
+        clientsocket.sendall(bytes('esta es una prueba', 'utf-8'))
 
 '''
 d = {1: 'Hey', 2: 'There'}

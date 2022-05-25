@@ -1,5 +1,4 @@
 import socket
-import pickle
 from interbotix_xs_modules.locobot import InterbotixLocobotXS
 
 HEADERSIZE = 10
@@ -68,7 +67,7 @@ def moveRobot(pose):
         # while (pose != 'double_tap'):
         if (pose == 'fist'):
             gripperClose()
-        if (pose == 'spread_fingers'):
+        if (pose == 'fingers_spread'):
             gripperOpen()
         # if (pose == 1):
         #     gripperOpen()
@@ -89,23 +88,26 @@ def moveRobot(pose):
 
 
 while True:
-    full_msg = b''
-    new_msg = True
+    # full_msg = b''
+    # new_msg = True
     while True:
-        msg = s.recv(16)
-        if new_msg:
-            # print("new msg len:", msg[:HEADERSIZE])
-            msglen = int(msg[:HEADERSIZE])
-            new_msg = False
+        # msg = s.recv(1024).decode('utf-8')
+        msg = s.recv(1024).decode('utf-8')
+        print(msg)
+        # if new_msg:
+        #     print("new msg len:", msg[:HEADERSIZE])
+        #     msglen = int(msg[:HEADERSIZE])
+        #     new_msg = False
 
-        full_msg += msg
+        # full_msg += msg
 
-        if len(full_msg)-HEADERSIZE == msglen:
-            d = pickle.loads(full_msg[HEADERSIZE:])
-            print(d)
-            moveRobot(d['pose'])
-            new_msg = True
-            full_msg = b''
+        # if len(full_msg)-HEADERSIZE == msglen:
+        # print(f'full_msg[HEADERSIZE:] --> {full_msg[HEADERSIZE:]}')
+        # d = pickle.loads(full_msg[HEADERSIZE:])
+        # print(d)
+        moveRobot(msg)
+        # new_msg = True
+        # full_msg = b''
 
 
 # if __name__ == '__main__':
