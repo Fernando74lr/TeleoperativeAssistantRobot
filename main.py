@@ -40,8 +40,8 @@ class Listener(myo.DeviceListener):
         parts.append(str(self.pose).ljust(10))
 
         if len(parts) > 4:
-            data = parts[4].split('.')[1].strip()
-            print(data)
+            msg = parts[4].split('.')[1].strip()
+            print(msg)
 
         sys.stdout.flush()
 
@@ -90,4 +90,4 @@ if __name__ == '__main__':
     while hub.run(listener.on_event, 500):
         # pass
         time.sleep(.2)
-        clientsocket.send(bytes(msg, 'utf-8'))
+        clientsocket.sendall(bytes(msg, 'utf-8'))
