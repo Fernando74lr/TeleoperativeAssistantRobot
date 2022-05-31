@@ -3,7 +3,7 @@ from interbotix_xs_modules.locobot import InterbotixLocobotXS
 
 
 
-flagPosition = False
+config = 0
 xaxis = 0.46
 yaxis = 0
 zaxis = 0.35
@@ -86,35 +86,34 @@ def sleep():
 
 
 def moveRobot(pose):
-    global flagPosition
+    global config
     try:
         # while (pose != 'double_tap'):
         if (pose == 'fist'):
-            gripperClose()
-        if (pose == 'fingers_spread'):
-            gripperOpen()
-        if (pose == 'wave_in'):
-            if flagPosition:
-                moveLeft()
+            if config == 2:
+                sleep()
             else:
+                gripperClose()
+        if (pose == 'fingers_spread'):
+            if config == 2:
+                home()
+            else:
+                gripperOpen()
+        if (pose == 'wave_in'):
+            if config == 1:
+                moveLeft()
+            elif config == 0:
                 moveDown()    
         if (pose == 'wave_out'):
-            if flagPosition:
+            if config == 1:
                 moveRight()
-            else:
+            elif config == 0:
                 moveUp()    
         if (pose == 'double_tap'):
-            flagPosition = not flagPosition     
-            # sleep()
-        
-        # if (pose == 4):
-        #     poseUp()
-        # if (pose == 5):
-        #     poseDown()
-        # if (pose == 6):
-        #     sleep()
-        # if (pose == 7):
-        #     home()
+            if config == 2:
+                config = 0
+            else:
+                config+=1
     except Exception as e:
         print(e)
 
