@@ -4,7 +4,7 @@ from interbotix_xs_modules.locobot import InterbotixLocobotXS
 
 
 config = 0
-xaxis = 0.46
+xaxis = 0.3
 yaxis = 0
 zaxis = 0.35
 
@@ -21,6 +21,23 @@ s.connect((ADDRESS, 1243))
 locobot = InterbotixLocobotXS(
     robot_model="locobot_wx250s", arm_model="mobile_wx250s")
 
+def bartender():
+    locobot.arm.set_ee_pose_components(x=0.3, z=0.2)
+    locobot.arm.set_single_joint_position("waist", math.pi/4.0)
+    locobot.gripper.open()
+    locobot.arm.set_ee_cartesian_trajectory(x=0.1, z=-0.25)
+    locobot.gripper.close()
+    locobot.arm.set_ee_cartesian_trajectory(x=-0.1, z=0.25)
+    locobot.arm.set_single_joint_position("waist", -math.pi/4.0)
+    locobot.arm.set_ee_cartesian_trajectory(pitch=1.5)
+    locobot.arm.set_ee_cartesian_trajectory(pitch=-1.5)
+    locobot.arm.set_single_joint_position("waist", math.pi/4.0)
+    locobot.arm.set_ee_cartesian_trajectory(x=0.1, z=-0.25)
+    locobot.gripper.open()
+    locobot.arm.set_ee_cartesian_trajectory(x=-0.1, z=0.25)
+    locobot.arm.go_to_home_pose()
+    locobot.arm.go_to_sleep_pose()
+
 
 def gripperClose():
     locobot.gripper.close(2.0)
@@ -36,7 +53,7 @@ def moveLeft():
     
     if yaxis<0.2:
         yaxis = yaxis+0.05
-        locobot.arm.set_ee_pose_components(x=0.46, y=yaxis ,z=zaxis)
+        locobot.arm.set_ee_pose_components(x=0.3, y=yaxis ,z=zaxis)
 
 
 def moveRight():
@@ -45,7 +62,7 @@ def moveRight():
     
     if yaxis>-0.2:
         yaxis = yaxis-0.05
-        locobot.arm.set_ee_pose_components(x=0.46, y=yaxis ,z=zaxis)
+        locobot.arm.set_ee_pose_components(x=0.3, y=yaxis ,z=zaxis)
 
 
 
@@ -65,7 +82,7 @@ def moveUp():
     
     if zaxis<0.46:
         zaxis = zaxis+0.02
-        locobot.arm.set_ee_pose_components(x=0.46, y=yaxis ,z=zaxis)
+        locobot.arm.set_ee_pose_components(x=0.3, y=yaxis ,z=zaxis)
 
 
 def moveDown():
@@ -74,11 +91,11 @@ def moveDown():
     
     if zaxis>0.1:
         zaxis = zaxis-0.02
-        locobot.arm.set_ee_pose_components(x=0.46, y=yaxis ,z=zaxis)
+        locobot.arm.set_ee_pose_components(x=0.3, y=yaxis ,z=zaxis)
 
 
 def home():
-    locobot.arm.go_to_home_pose()
+    locobot.arm.set_ee_pose_components(x=0.3, y=0.0 ,z=0.35)
 
 
 def sleep():
