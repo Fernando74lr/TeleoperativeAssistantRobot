@@ -1,7 +1,6 @@
 import socket
 from interbotix_xs_modules.locobot import InterbotixLocobotXS
-
-
+import math
 
 config = 0
 xaxis = 0.3
@@ -109,6 +108,8 @@ def moveRobot(pose):
         if (pose == 'fist'):
             if config == 2:
                 sleep()
+            elif config == 3:
+                bartender()
             else:
                 gripperClose()
         if (pose == 'fingers_spread'):
@@ -127,7 +128,7 @@ def moveRobot(pose):
             elif config == 0:
                 moveUp()    
         if (pose == 'double_tap'):
-            if config == 2:
+            if config == 3:
                 config = 0
             else:
                 config+=1
