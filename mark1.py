@@ -51,7 +51,7 @@ def moveLeft():
     global zaxis
     
     if yaxis<0.2:
-        yaxis = yaxis+0.05
+        yaxis = yaxis+0.07
         locobot.arm.set_ee_pose_components(x=0.3, y=yaxis ,z=zaxis)
 
 
@@ -60,7 +60,7 @@ def moveRight():
     global zaxis
     
     if yaxis>-0.2:
-        yaxis = yaxis-0.05
+        yaxis = yaxis-0.07
         locobot.arm.set_ee_pose_components(x=0.3, y=yaxis ,z=zaxis)
 
 
@@ -80,7 +80,7 @@ def moveUp():
     global zaxis
     
     if zaxis<0.46:
-        zaxis = zaxis+0.02
+        zaxis = zaxis+0.07
         locobot.arm.set_ee_pose_components(x=0.3, y=yaxis ,z=zaxis)
 
 
@@ -89,7 +89,7 @@ def moveDown():
     global zaxis
     
     if zaxis>0.1:
-        zaxis = zaxis-0.02
+        zaxis = zaxis-0.07
         locobot.arm.set_ee_pose_components(x=0.3, y=yaxis ,z=zaxis)
 
 

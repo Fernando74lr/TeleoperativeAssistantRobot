@@ -3,7 +3,7 @@ import time
 # import pickle
 
 HEADERSIZE = 20
-ADDRESS = socket.gethostbyname(socket.gethostname())
+ADDRESS = '172.25.176.1'#socket.gethostbyname(socket.gethostname())
 '    fist'
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
