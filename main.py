@@ -9,7 +9,8 @@ import socket
 import time
 
 msg = ''
-ADDRESS = '10.50.115.95'  # socket.gethostbyname(socket.gethostname())
+config = 0
+ADDRESS = '172.25.176.1'  # socket.gethostbyname(socket.gethostname())
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((ADDRESS, 1243))
@@ -29,7 +30,7 @@ class Listener(myo.DeviceListener):
         self.emg = None
 
     def output(self):
-        global msg
+        global msg, config
         if not self.interval.check_and_reset():
             return
 
@@ -41,7 +42,6 @@ class Listener(myo.DeviceListener):
 
         if len(parts) > 4:
             msg = parts[4].split('.')[1].strip()
-            print(msg)
 
         sys.stdout.flush()
 
@@ -90,4 +90,10 @@ if __name__ == '__main__':
     while hub.run(listener.on_event, 500):
         # pass
         time.sleep(.2)
+        if (msg == 'double_tap'):
+            if config == 3:
+                config = 0
+            else:
+                config+=1
+        print(f'GESTURE: {msg} | CONFIG: {config}')
         clientsocket.sendall(bytes(msg, 'utf-8'))
