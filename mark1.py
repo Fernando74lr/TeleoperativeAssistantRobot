@@ -7,7 +7,7 @@ xaxis = 0.3
 yaxis = 0
 zaxis = 0.35
 
-ADDRESS = '172.25.176.1'  # socket.gethostbyname(socket.gethostname())
+ADDRESS = '192.168.119.21'  # socket.gethostbyname(socket.gethostname())
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((ADDRESS, 1243))
 
