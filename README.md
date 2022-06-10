@@ -4,7 +4,7 @@ Este es un proyecto realizado totalmente en Python; consiste en la manipulación
 
 # Integrantes
 
-Fernando López Ramírez - A07144620
-Alan Suárez Santamaría - A01328931
-Anthony Ibrail Ortega Méndez - A01328817
-Dafne Valeria Godínez Madrigal - A01732907
+- Fernando López Ramírez - A07144620
+- Alan Suárez Santamaría - A01328931
+- Anthony Ibrail Ortega Méndez - A01328817
+- Dafne Valeria Godínez Madrigal - A01732907
