@@ -1,4 +1,4 @@
-# Teleoperativ eAssistant Robot Controlled By Armband
+# Teleoperative Assistant Robot Controlled By Armband
 
 This is a project done entirely in Python; it consists of the manipulation of a robotic arm controlled by a bracelet capable of detecting hand gestures. All this communication is achieved through a socket, where the band that generates the data works as a server, and the robot as a client that makes constant requests to obtain the data detected by the band.
 
